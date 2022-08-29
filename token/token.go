@@ -24,6 +24,7 @@ const (
 
 	LT = "<"
 	GT = ">"
+
 	// Delimiters
 	COMMA     = ","
 	SEMICOLON = ";"
@@ -53,4 +54,3 @@ func LookupIdent(ident string) TokenType {
 
 	return IDENT
 }
-
