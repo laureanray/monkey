@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"monkey/ast"
 	"monkey/lexer"
-	"net"
 	"testing"
 )
 
