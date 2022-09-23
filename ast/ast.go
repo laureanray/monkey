@@ -236,9 +236,9 @@ func (fl *FunctionLiteral) String() string {
 }
 
 type CallExpression struct {
-	Token    token.Token // The '(' token
-	Function Expression
-	Argumets []Expression
+	Token     token.Token // The '(' token
+	Function  Expression
+	Arguments []Expression
 }
 
 func (ce *CallExpression) expressionNode()      {}
@@ -247,7 +247,7 @@ func (ce *CallExpression) String() string {
 	var out bytes.Buffer
 
 	args := []string{}
-	for _, a := range ce.Argumets {
+	for _, a := range ce.Arguments {
 		args = append(args, a.String())
 	}
 
