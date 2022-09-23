@@ -270,9 +270,12 @@ func (p *Parser) parseBlockStatement() *ast.BlockStatement {
 
 func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
 	stmt := &ast.ReturnStatement{Token: p.curToken}
+
 	p.nextToken()
 
-	for !p.curTokenIs(token.SEMICOLON) {
+	stmt.ReturnValue = p.parseExpression(LOWEST)
+
+	if !p.curTokenIs(token.SEMICOLON) {
 		p.nextToken()
 	}
 
