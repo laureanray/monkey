@@ -11,7 +11,7 @@ const (
 	ILLEGAL = "ILLEGAL"
 	EOF     = "EOF"
 
-	// Identifiers + literals
+	// IDENT Identifiers + literals
 	IDENT = "IDENT"
 	INT   = "INT"
 
@@ -28,7 +28,7 @@ const (
 	EQ     = "=="
 	NOT_EQ = "!="
 
-	// Delimiters
+	// COMMA Delimiters
 	COMMA     = ","
 	SEMICOLON = ";"
 
@@ -37,7 +37,7 @@ const (
 	LBRACE = "{"
 	RBRACE = "}"
 
-	// Keywords
+	// FUNCTION Keywords
 	FUNCTION = "FUNCTION"
 	LET      = "LET"
 	TRUE     = "TRUE"
@@ -57,7 +57,7 @@ var keywords = map[string]TokenType{
 	"return": RETURN,
 }
 
-// Checks keywords table if given Identifiers is in fact a keyword.
+// LookupIdent Checks keywords table if given Identifiers is in fact a keyword.
 // If it is, it returns the keyword's TokenType.
 // If it isn't we just get back the token.IDENT -> for all user-defiend identifiers
 func LookupIdent(ident string) TokenType {
