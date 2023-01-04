@@ -35,8 +35,8 @@ func Eval(node ast.Node) object.Object {
 		return nativeBoolToBooleanObject(node.Value)
 	}
 
-	return nil
-}
+	return nil 
+} 
 
 func evalInfixExpression(operator string, left, right object.Object) object.Object {
 	switch {
