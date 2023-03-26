@@ -25,6 +25,10 @@ type Boolean struct {
 	Value bool
 }
 
+type Error struct {
+	Message string
+}
+
 type ReturnValue struct {
 	Value Object
 }
@@ -42,3 +46,6 @@ func (i *Boolean) Inspect() string  { return fmt.Sprintf("%t", i.Value) }
 
 func (n *Null) Type() ObjectType { return NULL_OBJ }
 func (n *Null) Inspect() string  { return "null" }
+
+func (e *Error) Type() ObjectType { return ERROR_OBJ }
+func (e *Error) Inspect() string  { return "ERROR: " + e.Message }
