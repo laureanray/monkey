@@ -36,6 +36,8 @@ const (
 	RPAREN = ")"
 	LBRACE = "{"
 	RBRACE = "}"
+  LBRACKET = "["
+  RBRACKET = "]"
 
 	// FUNCTION Keywords
 	FUNCTION = "FUNCTION"
@@ -47,6 +49,8 @@ const (
 	RETURN   = "RETURN"
 
 	STRING = "STRING"
+
+
 )
 
 var keywords = map[string]TokenType{
