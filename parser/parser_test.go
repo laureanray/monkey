@@ -847,6 +847,7 @@ func TestParsingIndexExpressions(t *testing.T) {
 	if !testIdentifier(t, indexExp.Left, "myArray") {
 		return
 	}
+
 	if !testInfixExpression(t, indexExp.Index, 1, "+", 1) {
 		return
 	}
