@@ -31,13 +31,14 @@ const (
 	// COMMA Delimiters
 	COMMA     = ","
 	SEMICOLON = ";"
+	COLON     = ":"
 
-	LPAREN = "("
-	RPAREN = ")"
-	LBRACE = "{"
-	RBRACE = "}"
-  LBRACKET = "["
-  RBRACKET = "]"
+	LPAREN   = "("
+	RPAREN   = ")"
+	LBRACE   = "{"
+	RBRACE   = "}"
+	LBRACKET = "["
+	RBRACKET = "]"
 
 	// FUNCTION Keywords
 	FUNCTION = "FUNCTION"
@@ -49,8 +50,6 @@ const (
 	RETURN   = "RETURN"
 
 	STRING = "STRING"
-
-
 )
 
 var keywords = map[string]TokenType{
