@@ -122,6 +122,7 @@ if (5 < 10) {
     {token.COLON, ":"},
     {token.STRING, "bar"},
     {token.RBRACE, "}"},
+    {token.SEMICOLON, ";"},
 		{token.EOF, ""},
 	}
 
