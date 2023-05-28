@@ -403,7 +403,6 @@ func evalHashLiteral(
 		}
 
 		hashed := hashKey.HashKey()
-    fmt.Printf("hashed: %v", hashed)
 		pairs[hashed] = object.HashPair{Key: key, Value: value}
 	}
 
