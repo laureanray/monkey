@@ -2,6 +2,7 @@ package vm
 
 import (
 	"monkey/code"
+	"monkey/compiler"
 	"monkey/object"
 )
 
@@ -14,4 +15,13 @@ type VM struct {
 	stack []object.Object
 
 	sp int // Always point to the next value. Top of the stack is stack [sp-1]
+}
+
+func New(bytecode *compiler.Bytecode) *VM {
+	return &VM {
+		instructions: bytecode.Instructions,
+		constants: bytecode.Constants,
+		stack: make([]object.Object, StackSize),
+		sp: 0,
+	}
 }
