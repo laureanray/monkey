@@ -70,7 +70,7 @@ func TestReadOperands(t *testing.T) {
 			t.Fatalf("definition not found: %q\n", err)
 		}
 
-		operandsRead, n := ReadOperands(def, instructions[1:])
+		operandsRead, n := ReadOperands(def, instruction[1:])
 
 		if n != tt.bytesRead {
 			t.Fatalf("n wrong. want=%d, got=%d", tt.bytesRead, n)
