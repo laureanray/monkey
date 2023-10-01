@@ -16,6 +16,8 @@ type compilerTestCase struct {
 	expectedInstructions []code.Instructions
 }
 
+
+// - HELPERS - 
 func parse(input string) *ast.Program {
 	l := lexer.New(input)
 	p := parser.New(l)
@@ -95,23 +97,6 @@ func testIntegerObject(expected int64, actual object.Object) error {
 	return nil
 }
 
-
-
-func TestIntegerArithmetic(t *testing.T) {
-	tests := []compilerTestCase{
-		{
-			input:             "1+2",
-			expectedConstants: []interface{}{1, 2},
-			expectedInstructions: []code.Instructions{
-				code.Make(code.OpConstant, 0),
-				code.Make(code.OpConstant, 1),
-			},
-		},
-	}
-
-	runCompilerTests(t, tests)
-}
-
 func runCompilerTests(t *testing.T, tests []compilerTestCase) {
 	t.Helper()
 
@@ -140,3 +125,19 @@ func runCompilerTests(t *testing.T, tests []compilerTestCase) {
 	}
 }
 
+
+// ----------- ACTUAL TESTS -------------- 
+func TestIntegerArithmetic(t *testing.T) {
+	tests := []compilerTestCase{
+		{
+			input:             "1+2",
+			expectedConstants: []interface{}{1, 2},
+			expectedInstructions: []code.Instructions{
+				code.Make(code.OpConstant, 0),
+				code.Make(code.OpConstant, 1),
+			},
+		},
+	}
+
+	runCompilerTests(t, tests)
+}
