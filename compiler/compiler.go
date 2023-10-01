@@ -1,8 +1,8 @@
 package compiler
 
 import (
-	"go/ast"
 	"monkey/code"
+	"monkey/ast"
 	"monkey/object"
 )
 
