@@ -50,3 +50,37 @@ func TestInstructionsString(t *testing.T) {
 		)
 	}
 }
+
+
+// This other test is for a function that will be the heart of `Instructions.String`.
+func TestReadOperands(t *testing.T) {
+	tests := []struct {
+		op Opcode
+		operands []int
+		bytesRead int
+	} {
+		{OpConstant, []int{65535}, 2},
+	}
+
+	for _, tt := range tests {
+		instruction := Make(tt.op, tt.operands...)
+		def, err := Lookup(byte(tt.op))
+
+		if err != nil {
+			t.Fatalf("definition not found: %q\n", err)
+		}
+
+		operandsRead, n := ReadOperands(def, instructions[1:])
+
+		if n != tt.bytesRead {
+			t.Fatalf("n wrong. want=%d, got=%d", tt.bytesRead, n)
+		}
+
+		for i, want := range tt.operands {
+			if operandsRead[i] != want {
+				t.Errorf("operand wrong. want=%d, got=%d", want, operandsRead[i])
+			}
+		}
+
+	}
+}
