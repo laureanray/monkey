@@ -3,33 +3,33 @@ package code
 import "testing"
 
 func TestMake(t *testing.T) {
-  tests := []struct{
-    op Opcode
-    operands []int
-    expected []byte
-  }{
-    {OpConstant, []int{65534}, []byte{byte(OpConstant), 255, 254}},
-  }
+	tests := []struct {
+		op       Opcode
+		operands []int
+		expected []byte
+	}{
+		{OpConstant, []int{65534}, []byte{byte(OpConstant), 255, 254}},
+	}
 
-  for _, tt := range tests {
-    instruction := Make(tt.op, tt.operands...)
+	for _, tt := range tests {
+		instruction := Make(tt.op, tt.operands...)
 
-    if len(instruction) != len(tt.expected) {
-      t.Errorf("instruction has wrong length. want=%d, got=%d", len(tt.expected), len(instruction))
-    }
+		if len(instruction) != len(tt.expected) {
+			t.Errorf("instruction has wrong length. want=%d, got=%d", len(tt.expected), len(instruction))
+		}
 
-    for i, b := range tt.expected {
-      if instruction[i] != tt.expected[i] {
-        t.Errorf("wrong byte at pos %d. want=%d, got=%d", i, b, instruction[i])
-      }
-    }
-  }
+		for i, b := range tt.expected {
+			if instruction[i] != tt.expected[i] {
+				t.Errorf("wrong byte at pos %d. want=%d, got=%d", i, b, instruction[i])
+			}
+		}
+	}
 }
 
 func TestInstructionsString(t *testing.T) {
-	instructions := []Instructions {
+	instructions := []Instructions{
 		Make(OpConstant, 1),
-		Make(OpConstant, 2), 
+		Make(OpConstant, 2),
 		Make(OpConstant, 65535),
 	}
 
@@ -44,21 +44,20 @@ func TestInstructionsString(t *testing.T) {
 	}
 
 	if concatted.String() != expected {
-		t.Errorf("instructions wrongly formatted.\nwant=%q\ngot=%q", 
-			expected, 
+		t.Errorf("instructions wrongly formatted.\nwant=%q\ngot=%q",
+			expected,
 			concatted.String(),
 		)
 	}
 }
 
-
 // This other test is for a function that will be the heart of `Instructions.String`.
 func TestReadOperands(t *testing.T) {
 	tests := []struct {
-		op Opcode
-		operands []int
+		op        Opcode
+		operands  []int
 		bytesRead int
-	} {
+	}{
 		{OpConstant, []int{65535}, 2},
 	}
 
