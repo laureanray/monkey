@@ -22,6 +22,10 @@ var definitions = map[Opcode]*Definition{
 	OpConstant: {"OpConstant", []int{2}},
 }
 
+func (ins Instructions) String() string {
+	return ""
+}
+
 func Lookup(op byte) (*Definition, error) {
 	def, ok := definitions[Opcode(op)]
 
