@@ -16,18 +16,18 @@ const (
 )
 
 type Definition struct {
-	Name         string
+	Name          string
 	OperandWidths []int
 }
 
 var definitions = map[Opcode]*Definition{
 	OpConstant: {"OpConstant", []int{2}},
-	OpAdd: {"OpAdd", []int{}},
+	OpAdd:      {"OpAdd", []int{}},
 }
 
 func (ins Instructions) String() string {
 	var out bytes.Buffer
-	
+
 	i := 0
 
 	for i < len(ins) {
@@ -47,7 +47,6 @@ func (ins Instructions) String() string {
 	return out.String()
 }
 
-
 func (ins Instructions) fmtInsruction(def *Definition, operands []int) string {
 	operandCount := len(def.OperandWidths)
 
@@ -56,7 +55,7 @@ func (ins Instructions) fmtInsruction(def *Definition, operands []int) string {
 	}
 
 	switch operandCount {
-	case 1: 
+	case 1:
 		return fmt.Sprintf("%s %d", def.Name, operands[0])
 	}
 
@@ -98,16 +97,15 @@ func Make(op Opcode, operands ...int) []byte {
 			binary.BigEndian.PutUint16(instruction[offset:], uint16(o))
 		}
 
-    offset += width
+		offset += width
 	}
 
-  return instruction
+	return instruction
 }
-
 
 func ReadOperands(def *Definition, ins Instructions) ([]int, int) {
 	operands := make([]int, len(def.OperandWidths))
-	offset := 0 
+	offset := 0
 
 	for i, width := range def.OperandWidths {
 		switch width {
