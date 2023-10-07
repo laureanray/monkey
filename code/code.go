@@ -13,6 +13,9 @@ type Opcode byte
 const (
 	OpConstant Opcode = iota
 	OpAdd
+	OpMul
+	OpDiv
+	OpSub
 	OpPop
 )
 
@@ -25,6 +28,9 @@ var definitions = map[Opcode]*Definition{
 	OpConstant: {"OpConstant", []int{2}},
 	OpAdd:      {"OpAdd", []int{}},
 	OpPop:      {"OpPop", []int{}},
+	OpMul:      {"OpMul", []int{}},
+	OpDiv:      {"OpDiv", []int{}},
+	OpSub:      {"OpSub", []int{}},
 }
 
 func (ins Instructions) String() string {
