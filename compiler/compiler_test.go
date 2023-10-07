@@ -16,8 +16,7 @@ type compilerTestCase struct {
 	expectedInstructions []code.Instructions
 }
 
-
-// - HELPERS - 
+// - HELPERS -
 func parse(input string) *ast.Program {
 	l := lexer.New(input)
 	p := parser.New(l)
@@ -39,7 +38,6 @@ func testInstructions(
 			return fmt.Errorf("wrong instruction at %d.\nwant=%q\ngot=%q", i, &concatted, actual)
 		}
 	}
-
 
 	return nil
 }
@@ -66,7 +64,6 @@ func testConstants(
 		)
 	}
 
-
 	for i, constant := range expected {
 		switch constant := constant.(type) {
 		case int:
@@ -78,10 +75,8 @@ func testConstants(
 		}
 	}
 
-
 	return nil
 }
-
 
 func testIntegerObject(expected int64, actual object.Object) error {
 	result, ok := actual.(*object.Integer)
@@ -125,8 +120,7 @@ func runCompilerTests(t *testing.T, tests []compilerTestCase) {
 	}
 }
 
-
-// ----------- ACTUAL TESTS -------------- 
+// ----------- ACTUAL TESTS --------------
 func TestIntegerArithmetic(t *testing.T) {
 	tests := []compilerTestCase{
 		{
@@ -136,6 +130,36 @@ func TestIntegerArithmetic(t *testing.T) {
 				code.Make(code.OpConstant, 0),
 				code.Make(code.OpConstant, 1),
 				code.Make(code.OpAdd),
+				code.Make(code.OpPop),
+			},
+		},
+		{
+			input:             "1 - 2",
+			expectedConstants: []interface{}{1, 2},
+			expectedInstructions: []code.Instructions{
+				code.Make(code.OpConstant, 1),
+				code.Make(code.OpConstant, 2),
+				code.Make(code.OpSub),
+				code.Make(code.OpPop),
+			},
+		},
+		{
+			input:             "1 * 2",
+			expectedConstants: []interface{}{1, 2},
+			expectedInstructions: []code.Instructions{
+				code.Make(code.OpConstant, 1),
+				code.Make(code.OpConstant, 2),
+				code.Make(code.OpMul),
+				code.Make(code.OpPop),
+			},
+		},
+		{
+			input:             "1 / 2",
+			expectedConstants: []interface{}{1, 2},
+			expectedInstructions: []code.Instructions{
+				code.Make(code.OpConstant, 1),
+				code.Make(code.OpConstant, 2),
+				code.Make(code.OpDiv),
 				code.Make(code.OpPop),
 			},
 		},
