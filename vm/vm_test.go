@@ -11,7 +11,7 @@ import (
 )
 
 type vmTestCase struct {
-	input string
+	input    string
 	expected interface{}
 }
 
@@ -27,9 +27,8 @@ func runVmTests(t *testing.T, tests []vmTestCase) {
 			t.Fatalf("compiler error: %s", err)
 		}
 
-		vm := New(comp.Bytecode())	
+		vm := New(comp.Bytecode())
 		err = vm.Run()
-
 
 		if err != nil {
 			t.Fatalf("vm error: %s", err)
@@ -41,24 +40,24 @@ func runVmTests(t *testing.T, tests []vmTestCase) {
 }
 
 func parse(input string) *ast.Program {
-    l := lexer.New(input)
-    p := parser.New(l)
-    return p.ParseProgram()
+	l := lexer.New(input)
+	p := parser.New(l)
+	return p.ParseProgram()
 }
 
 func testIntegerObject(expected int64, actual object.Object) error {
-    result, ok := actual.(*object.Integer)
-    if !ok {
-        return fmt.Errorf("object is not Integer. got=%T (%+v)",
-            actual, actual)
-    }
+	result, ok := actual.(*object.Integer)
+	if !ok {
+		return fmt.Errorf("object is not Integer. got=%T (%+v)",
+			actual, actual)
+	}
 
-    if result.Value != expected {
-        return fmt.Errorf("object has wrong value. got=%d, want=%d",
-            result.Value, expected)
-    }
+	if result.Value != expected {
+		return fmt.Errorf("object has wrong value. got=%d, want=%d",
+			result.Value, expected)
+	}
 
-    return nil
+	return nil
 }
 
 func testExpectedObject(
@@ -77,12 +76,21 @@ func testExpectedObject(
 	}
 }
 
-
 func TestIntegerArithmetic(t *testing.T) {
 	tests := []vmTestCase{
 		{"1", 1},
 		{"2", 2},
-		{"1 + 2", 3}, // FIXME
+		{"1 + 2", 3},
+		{"1 - 2", -1},
+		{"1 * 2", 2},
+		{"4 / 2", 2},
+		{"50 / 2 * 2 + 10 - 5", 55},
+		{"5 * (2 + 10)", 60},
+		{"5 + 5 + 5 + 5 - 10", 10},
+		{"2 * 2 * 2 * 2 * 2", 32},
+		{"5 * 2 + 10", 20},
+		{"5 + 2 * 10", 25},
+		{"5 * (2 + 10)", 60},
 	}
 
 	runVmTests(t, tests)
