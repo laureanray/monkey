@@ -56,6 +56,46 @@ func (vm *VM) pop() object.Object {
 	return o
 }
 
+func (vm *VM) executeBinaryOperation(op code.Opcode) error {
+	right := vm.pop()
+	left := vm.pop()
+	// leftValue := left.(*object.Integer).Value
+	// rightValue := right.(*object.Integer).Value
+
+	leftType := left.Type()
+	rightType := right.Type()
+
+	if left.Type() == object.INTEGER_OBJ && rightType == object.INTEGER_OBJ {
+		return vm.executeBinaryIntegerOperation(op, left, right)
+	}
+
+
+	return fmt.Errorf("unsupported types for binary operations: %s %s", leftType, rightType)
+}
+
+
+func (vm *VM) executeBinaryIntegerOperation(op code.Opcode, left, right object.Object) error {
+	leftValue := left.(*object.Integer).Value
+	rightValue := right.(*object.Integer).Value
+
+	var result int64
+
+	switch op {
+	case code.OpAdd:
+		result = leftValue + rightValue
+	case code.OpSub:
+		result = leftValue - rightValue
+	case code.OpMul:
+		result = leftValue * rightValue
+	case code.OpDiv:
+		result = leftValue / rightValue
+	default:
+		return fmt.Errorf("unknown integer operatir: %d", op)
+	}
+
+	return vm.push(&object.Integer{Value: result})
+}
+
 // Heartbeat: the main loop, fetch decode execute cycle
 func (vm *VM) Run() error {
 	for ip := 0; ip < len(vm.instructions); ip++ {
@@ -69,14 +109,18 @@ func (vm *VM) Run() error {
 			if err != nil {
 				return err
 			}
-		case code.OpAdd:
-			right := vm.pop()
-			left := vm.pop()
-			leftValue := left.(*object.Integer).Value
-			rightValue := right.(*object.Integer).Value
-
-			result := leftValue + rightValue
-			vm.push(&object.Integer{Value: result})
+		case code.OpAdd, code.OpSub, code.OpMul, code.OpDiv:
+			// right := vm.pop()
+			// left := vm.pop()
+			// leftValue := left.(*object.Integer).Value
+			// rightValue := right.(*object.Integer).Value
+			//
+			// result := leftValue + rightValue
+			// vm.push(&object.Integer{Value: result})
+			err := vm.executeBinaryOperation(op)
+			if err != nil {
+				return err
+			}
 		case code.OpPop:
 			vm.pop()
 		}
